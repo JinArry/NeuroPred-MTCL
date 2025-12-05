@@ -1,4 +1,7 @@
-# ESM特征提取与模型训练评估系统
+# NeuroPred-MTCL
+Multi-Task Contrastive Learning with Attention Mechanisms for Neuropeptide Prediction Using ESM Representations
+
+## About
 
 本系统实现了基于ESM预训练模型的神经肽预测流程，包括特征提取、模型训练和评估三个主要步骤。
 
@@ -10,7 +13,7 @@
 - **输出**: ESM特征numpy数组文件
 - **特点**: 自动处理不同长度的序列，支持批处理
 
-### 2. `main_train.py` - 模型训练
+### 2. `main_train_optimized_v2.py` - 模型训练
 - **功能**: 基于ESM特征训练分类模型
 - **特点**: 
   - 自适应ESM特征维度
@@ -18,7 +21,7 @@
   - 自动保存最佳模型和训练参数
   - 支持命令行参数配置
 
-### 3. `main_evaluation.py` - 模型评估
+### 3. `main_evaluation_optimized_v2.py` - 模型评估
 - **功能**: 评估训练好的模型性能
 - **特点**:
   - 自适应ESM特征维度
@@ -26,7 +29,7 @@
   - 支持批量评估多个模型
   - 生成详细的结果报告
 
-### 4. `model05.py` - 模型架构
+### 4. `model06_v2.py` - 模型架构
 - **功能**: 定义神经网络模型结构
 - **特点**:
   - 支持动态输入维度
@@ -38,23 +41,22 @@
 ### 步骤1: 提取ESM特征
 
 ```bash
-cd NewModel
 python extract_esm_features.py
 ```
 
-这将从 `../src/neuropeptidepredict/training.csv` 和 `../src/neuropeptidepredict/testing.csv` 读取数据，并提取ESM特征保存到 `../src/neuropeptidepredict/esm1_features/` 目录。
+这将从 `data/training.csv` 和 `data/testing.csv` 读取数据，并提取ESM特征保存到 `features/` 目录。
 
 ### 步骤2: 训练模型
 
 ```bash
 # 使用默认参数训练
-python main_train.py
+python main_train_optimized_v2.py
 
 # 自定义参数训练
-python main_train.py --data_dir ../src/neuropeptidepredict/esm1_features \
-                     --output_dir checkpoints \
-                     --seeds 30,40 \
-                     --epochs 20
+python main_train_optimized_v2.py --data_dir features \
+                                   --output_dir checkpoints \
+                                   --seeds 30,40 \
+                                   --epochs 20
 ```
 
 参数说明：
@@ -67,14 +69,14 @@ python main_train.py --data_dir ../src/neuropeptidepredict/esm1_features \
 
 ```bash
 # 使用默认参数评估
-python main_evaluation.py
+python main_evaluation_optimized_v2.py
 
 # 自定义参数评估
-python main_evaluation.py --data_dir ../src/neuropeptidepredict/esm1_features \
-                          --checkpoint_dir checkpoints \
-                          --seeds 30,40 \
-                          --model_name "NewModel-05-Attn" \
-                          --results_prefix "eval_m05"
+python main_evaluation_optimized_v2.py --data_dir features \
+                                        --checkpoint_dir checkpoints \
+                                        --seeds 30,40 \
+                                        --model_name "Model06_v2_Attn" \
+                                        --results_prefix "eval_m06"
 ```
 
 参数说明：
@@ -95,16 +97,16 @@ python main_evaluation.py --data_dir ../src/neuropeptidepredict/esm1_features \
 - `test_labels_seq.npy`: 测试集标签
 
 ### 训练输出
-- `Model05_Attn_seed{seed}_best.h5`: 最佳模型权重
-- `Model05_Attn_seed{seed}_best_params.json`: 训练参数和元数据
+- `Model06_v2_Attn_seed{seed}_best.weights.h5`: 最佳模型权重
+- `Model06_v2_Attn_seed{seed}_best_params.json`: 训练参数和元数据
 
 ### 评估输出
-- `eval_m05_seed{seed}_table.csv`: 单个模型结果表格
-- `eval_m05_seed{seed}_table.md`: 单个模型结果Markdown表格
-- `eval_m05_seed{seed}_results.json`: 单个模型详细结果
-- `eval_m05_average_table.csv`: 平均结果表格
-- `eval_m05_average_table.md`: 平均结果Markdown表格
-- `eval_m05_summary.json`: 汇总结果
+- `eval_m06_seed{seed}_table.csv`: 单个模型结果表格
+- `eval_m06_seed{seed}_table.md`: 单个模型结果Markdown表格
+- `eval_m06_seed{seed}_results.json`: 单个模型详细结果
+- `eval_m06_average_table.csv`: 平均结果表格
+- `eval_m06_average_table.md`: 平均结果Markdown表格
+- `eval_m06_summary.json`: 汇总结果
 
 ## 自适应维度特性
 
