@@ -73,19 +73,11 @@ python main_evaluation_optimized_v2.py
 - `eval_m06_average_table.md`: Average result Markdown table
 - `eval_m06_summary.json`: Summary results
 
-## Adaptive Dimension Features
-
-The system has the following adaptive features:
-
-1. **Feature Dimension Adaptation**: Automatically detects ESM feature dimensions without manual specification
-2. **Class Number Adaptation**: Automatically detects the number of label classes
-3. **Input Shape Adaptation**: Supports both 2D and 3D input formats
-4. **Model Structure Adaptation**: Dynamically adjusts model structure based on input dimensions
 
 ## Requirements
 
-- Python 3.7+
-- TensorFlow 2.x
+- Python 3.9.13
+- TensorFlow 2.13.0
 - PyTorch (for ESM models)
 - NumPy
 - Pandas
@@ -97,4 +89,3 @@ The system has the following adaptive features:
 1. Ensure sufficient GPU memory for ESM feature extraction
 2. Best models are automatically saved during training
 3. Evaluation results include detailed performance metrics and confusion matrices
-4. Supports training with multiple random seeds for stable results
