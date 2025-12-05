@@ -11,23 +11,12 @@ This system implements a neuropeptide prediction pipeline based on ESM pre-train
 - **Function**: Extract features from protein sequences using ESM pre-trained models
 - **Input**: Training and testing CSV files (containing sequences and labels)
 - **Output**: ESM feature numpy array files
-- **Features**: Automatically handles sequences of different lengths, supports batch processing
 
 ### 2. `main_train_optimized_v2.py` - Model Training
 - **Function**: Train classification models based on ESM features
-- **Features**: 
-  - Adaptive ESM feature dimensions
-  - Supports training with multiple random seeds
-  - Automatically saves best models and training parameters
-  - Supports command-line parameter configuration
 
 ### 3. `main_evaluation_optimized_v2.py` - Model Evaluation
 - **Function**: Evaluate the performance of trained models
-- **Features**:
-  - Adaptive ESM feature dimensions
-  - Computes multiple evaluation metrics (ACC, Precision, Recall, F1, MCC, AUROC)
-  - Supports batch evaluation of multiple models
-  - Generates detailed result reports
 
 ### 4. `model06_v2.py` - Model Architecture
 - **Function**: Defines the neural network model structure
@@ -52,18 +41,7 @@ This will read data from `data/training.csv` and `data/testing.csv`, and extract
 # Train with default parameters
 python main_train_optimized_v2.py
 
-# Train with custom parameters
-python main_train_optimized_v2.py --data_dir features \
-                                   --output_dir checkpoints \
-                                   --seeds 30,40 \
-                                   --epochs 20
 ```
-
-Parameter description:
-- `--data_dir`: ESM feature data directory
-- `--output_dir`: Model save directory
-- `--seeds`: Random seed range, format as "start,end"
-- `--epochs`: Number of training epochs
 
 ### Step 3: Evaluate Model
 
@@ -71,20 +49,7 @@ Parameter description:
 # Evaluate with default parameters
 python main_evaluation_optimized_v2.py
 
-# Evaluate with custom parameters
-python main_evaluation_optimized_v2.py --data_dir features \
-                                        --checkpoint_dir checkpoints \
-                                        --seeds 30,40 \
-                                        --model_name "Model06_v2_Attn" \
-                                        --results_prefix "eval_m06"
 ```
-
-Parameter description:
-- `--data_dir`: ESM feature data directory
-- `--checkpoint_dir`: Checkpoint directory
-- `--seeds`: Random seed range
-- `--model_name`: Model name
-- `--results_prefix`: Result file prefix
 
 ## Output Files
 
